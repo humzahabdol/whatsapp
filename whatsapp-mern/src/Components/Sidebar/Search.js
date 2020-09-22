@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/Search.css";
+import "../../css/Sidebar/Search.css";
 import { SearchOutlined } from "@material-ui/icons";
 
 function Search() {
