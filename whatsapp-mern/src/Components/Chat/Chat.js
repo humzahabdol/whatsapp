@@ -1,12 +1,15 @@
 import React from "react";
 import "../../css/Chat/Chat.css";
 import ChatHeader from "./ChatHeader";
+import ChatBody from "./ChatBody";
+import ChatFooter from "./ChatFooter";
 
 function Chat() {
   return (
     <div className="chat">
       <ChatHeader />
-      <h1>I am the chat</h1>
+      <ChatBody />
+      <ChatFooter />
     </div>
   );
 }
