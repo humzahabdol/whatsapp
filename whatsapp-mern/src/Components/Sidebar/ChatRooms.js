@@ -5,7 +5,7 @@ import SidebarChat from "./SidebarChat";
 function ChatRooms() {
   return (
     <div className="chatRooms">
-      <SidebarChat />
+      <SidebarChat addNewChat />
       <SidebarChat />
       <SidebarChat />
     </div>

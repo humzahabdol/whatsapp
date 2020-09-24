@@ -1,17 +1,18 @@
 import React from "react";
 import "../../css/Chat/ChatMessage.css";
 
-function ChatMessage(props) {
+function ChatMessage({ message }) {
+  console.log(message);
   return (
     <div>
       <p
         className={`chatMessage ${
-          props.receiver ? "chatMessage__reciever" : ""
+          message.received ? "chatMessage__receiver" : ""
         }`}
       >
-        <span className="chatMessage__name">{props.name}</span>
-        {props.message}
-        <span className="chatMessage__timestamp">{props.timestamp}</span>
+        <span className="chatMessage__name">{message.name}</span>
+        {message.message}
+        <span className="chatMessage__timestamp">{message.timestamp}</span>
       </p>
     </div>
   );
