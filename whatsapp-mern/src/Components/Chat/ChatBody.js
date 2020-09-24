@@ -2,15 +2,19 @@ import React from "react";
 import "../../css/Chat/ChatBody.css";
 import ChatMessage from "./ChatMessage";
 
-function ChatBody() {
+function ChatBody({ messages }) {
+  console.log(messages);
   return (
     <div className="chatBody">
-      <ChatMessage
-        name="Humzah Abdol"
-        message="This is a message brother"
-        timestamp={new Date().toUTCString()}
-        reciever={false}
-      />
+      {messages.map((message) => (
+        <ChatMessage
+          name={message.name}
+          message={message.message}
+          timestamp={message.timestamp}
+          receiver={message.received}
+        />
+      ))}
+
       <ChatMessage
         name="Zahiyah M"
         message="it works"
