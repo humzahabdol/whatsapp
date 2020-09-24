@@ -6,7 +6,7 @@ function ChatMessage(props) {
     <div>
       <p
         className={`chatMessage ${
-          props.reciever ? "chatMessage__reciever" : ""
+          props.receiver ? "chatMessage__reciever" : ""
         }`}
       >
         <span className="chatMessage__name">{props.name}</span>
