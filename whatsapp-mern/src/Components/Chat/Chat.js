@@ -5,7 +5,6 @@ import ChatBody from "./ChatBody";
 import ChatFooter from "./ChatFooter";
 
 function Chat({ messages }) {
-  console.log(messages);
   return (
     <div className="chat">
       <ChatHeader />
