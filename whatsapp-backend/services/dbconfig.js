@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
+const connection_url =
+  "mongodb+srv://admin:dTbNOEJFogiGkBcI@cluster0.5xyaf.mongodb.net/whatsappdbha?retryWrites=true&w=majority";
+
 export async function getConnection(pusher) {
-  const connection_url =
-    "mongodb+srv://admin:dTbNOEJFogiGkBcI@cluster0.5xyaf.mongodb.net/whatsappdbha?retryWrites=true&w=majority";
   mongoose.connect(connection_url, {
     useCreateIndex: true,
     useNewUrlParser: true,
@@ -13,22 +14,44 @@ export async function getConnection(pusher) {
 
   db.once("open", () => {
     console.log("DB connected");
-    const msgCollection = db.collection("messagecontents");
-    const changeStream = msgCollection.watch();
+    const messageCollection = db.collection("messagecontents");
+    const messageChangeStream = messageCollection.watch();
+    initializeMessagePusher(messageChangeStream, pusher);
 
-    changeStream.on("change", (change) => {
-      if (change.operationType === "insert") {
-        const messageDetails = change.fullDocument;
-        pusher.trigger("messages", "inserted", {
-          name: messageDetails.name,
-          message: messageDetails.message,
-          timestamp: messageDetails.timestamp,
-          received: messageDetails.received,
-        });
-      } else {
-        console.log("Error triggering Pusher");
-      }
-    });
+    const roomCollection = db.collection("rooms");
+    const roomChangeStream = roomCollection.watch();
+    initializeRoomPusher(roomChangeStream, pusher);
+  });
+}
+
+function initializeMessagePusher(changeStream, pusher) {
+  changeStream.on("change", (change) => {
+    if (change.operationType === "insert") {
+      const messageDetails = change.fullDocument;
+      pusher.trigger("messages", "inserted", {
+        name: messageDetails.name,
+        message: messageDetails.message,
+        timestamp: messageDetails.timestamp,
+        received: messageDetails.received,
+      });
+    } else {
+      console.log("Error triggering message Pusher");
+    }
+  });
+}
+
+function initializeRoomPusher(changeStream, pusher) {
+  changeStream.on("change", (change) => {
+    if (change.operationType === "insert") {
+      const roomDetails = change.fullDocument;
+      pusher.trigger("messages", "inserted", {
+        name: roomDetails.name,
+        message: roomDetails.message,
+        avatar: roomDetails.avatar,
+      });
+    } else {
+      console.log("Error triggering  message Pusher");
+    }
   });
 }
 
