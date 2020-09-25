@@ -3,6 +3,7 @@ import Pusher from "pusher";
 import cors from "cors";
 import health from "./routes/health.js";
 import message from "./routes/messages.js";
+import room from "./routes/room.js";
 import dbconfig from "./services/dbconfig.js";
 
 // app config
@@ -27,6 +28,7 @@ dbconfig.getConnection(pusher);
 
 app.use("/", health);
 app.use("/messages", message);
+app.use("/rooms", room);
 
 // listen
 app.listen(port, () => console.log(`Listening on localhost:${port}`));
