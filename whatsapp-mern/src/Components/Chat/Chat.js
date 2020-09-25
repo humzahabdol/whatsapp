@@ -4,11 +4,11 @@ import ChatHeader from "./ChatHeader";
 import ChatBody from "./ChatBody";
 import ChatFooter from "./ChatFooter";
 
-function Chat({ messages }) {
+function Chat() {
   return (
     <div className="chat">
       <ChatHeader />
-      <ChatBody messages={messages} />
+      <ChatBody />
       <ChatFooter />
     </div>
   );

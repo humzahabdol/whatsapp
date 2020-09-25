@@ -1,9 +1,17 @@
 import mongoose from "mongoose";
+import Pusher from "pusher";
 
 const connection_url =
   "mongodb+srv://admin:dTbNOEJFogiGkBcI@cluster0.5xyaf.mongodb.net/whatsappdbha?retryWrites=true&w=majority";
 
-export async function getConnection(pusher) {
+const pusher = new Pusher({
+  appId: "1078394",
+  key: "45269330fa99db0ee296",
+  secret: "63713b141496a4ee940b",
+  cluster: "us3",
+  encrypted: true,
+});
+export async function getConnection() {
   mongoose.connect(connection_url, {
     useCreateIndex: true,
     useNewUrlParser: true,
@@ -17,14 +25,10 @@ export async function getConnection(pusher) {
     const messageCollection = db.collection("messagecontents");
     const messageChangeStream = messageCollection.watch();
     initializeMessagePusher(messageChangeStream, pusher);
-
-    const roomCollection = db.collection("rooms");
-    const roomChangeStream = roomCollection.watch();
-    initializeRoomPusher(roomChangeStream, pusher);
   });
 }
 
-function initializeMessagePusher(changeStream, pusher) {
+function initializeMessagePusher(changeStream) {
   changeStream.on("change", (change) => {
     if (change.operationType === "insert") {
       const messageDetails = change.fullDocument;
@@ -36,21 +40,6 @@ function initializeMessagePusher(changeStream, pusher) {
       });
     } else {
       console.log("Error triggering message Pusher");
-    }
-  });
-}
-
-function initializeRoomPusher(changeStream, pusher) {
-  changeStream.on("change", (change) => {
-    if (change.operationType === "insert") {
-      const roomDetails = change.fullDocument;
-      pusher.trigger("messages", "inserted", {
-        name: roomDetails.name,
-        message: roomDetails.message,
-        avatar: roomDetails.avatar,
-      });
-    } else {
-      console.log("Error triggering  message Pusher");
     }
   });
 }
