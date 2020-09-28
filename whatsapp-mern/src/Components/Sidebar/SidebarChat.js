@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Avatar } from "@material-ui/core";
 import "../../css/Sidebar/SidebarChat.css";
 import axios from "./../../axios.js";
+import { Link } from "react-router-dom";
 
 function SidebarChat({ addNewChat, id, name }) {
   const [seed, setSeed] = useState("");
@@ -20,13 +21,15 @@ function SidebarChat({ addNewChat, id, name }) {
   };
 
   return !addNewChat ? (
-    <div className="sidebarChat">
-      <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
-      <div className="sidebarChat__info">
-        <h2>{name}</h2>
-        <p>Last message</p>
+    <Link to={`/rooms/${id}`}>
+      <div className="sidebarChat">
+        <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+        <div className="sidebarChat__info">
+          <h2>{name}</h2>
+          <p>Last message</p>
+        </div>
       </div>
-    </div>
+    </Link>
   ) : (
     <div onClick={createChat} className="sidebarChat">
       <h2>Add new Chat</h2>

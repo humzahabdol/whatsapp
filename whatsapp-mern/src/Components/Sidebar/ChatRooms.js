@@ -28,12 +28,12 @@ function ChatRooms() {
       channel.unsubscribe();
     };
   }, [rooms]);
-
+  console.log(rooms);
   return (
     <div className="chatRooms">
       <SidebarChat addNewChat />
       {rooms.map((room) => (
-        <SidebarChat key={room.id} id={room.id} name={room.name} />
+        <SidebarChat key={room._id} id={room._id} name={room.name} />
       ))}
     </div>
   );
