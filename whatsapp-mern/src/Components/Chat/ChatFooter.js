@@ -9,13 +9,18 @@ function ChatFooter() {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    await axios.post("/messages/new", {
-      message: input,
-      name: "Humzah Abdol",
-      timestamp: "Just Now!",
-      received: true,
-    });
-    setInput("");
+    if (input.length > 0) {
+      var date = new Date();
+      var dateString = date.toLocaleString();
+
+      await axios.post("/messages/new", {
+        message: input,
+        name: "Humzah Abdol",
+        timestamp: dateString,
+        received: true,
+      });
+      setInput("");
+    }
   };
 
   return (

@@ -2,7 +2,6 @@ import React from "react";
 import "../../css/Chat/ChatMessage.css";
 
 function ChatMessage({ message }) {
-  console.log(message);
   return (
     <div>
       <p
