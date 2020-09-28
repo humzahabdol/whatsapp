@@ -28,7 +28,7 @@ function ChatRooms() {
       channel.unsubscribe();
     };
   }, [rooms]);
-  console.log(rooms);
+
   return (
     <div className="chatRooms">
       <SidebarChat addNewChat />
