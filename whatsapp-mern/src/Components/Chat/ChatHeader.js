@@ -9,6 +9,7 @@ function ChatHeader() {
   const { roomId } = useParams();
   const [roomName, setRoomName] = useState("");
   const [seed, setSeed] = useState("");
+  const [messages, setMessages] = useState("");
 
   useEffect(() => {
     if (roomId) {
@@ -16,6 +17,10 @@ function ChatHeader() {
         setRoomName(response.data.name);
       });
       setSeed(Math.floor(Math.random() * 5000));
+
+      axios.get(`/messages/${roomId}`).then((response) => {
+        setMessages(response.data);
+      });
     }
   }, [roomId]);
 
@@ -27,7 +32,7 @@ function ChatHeader() {
 
       <div className="chatHeader__info">
         <h3>{roomName}</h3>
-        <p>Last seen at ...</p>
+        <p>{messages[messages.length - 1]?.timestamp}</p>
       </div>
 
       <div className="chatHeader_headerRight">

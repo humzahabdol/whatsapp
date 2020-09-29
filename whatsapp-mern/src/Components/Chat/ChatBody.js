@@ -3,15 +3,16 @@ import "../../css/Chat/ChatBody.css";
 import ChatMessage from "./ChatMessage";
 import Pusher from "pusher-js";
 import axios from "../../axios";
+import { useParams } from "react-router-dom";
 
 function ChatBody() {
   const [messages, setMessages] = useState([]);
-
+  const { roomId } = useParams();
   useEffect(() => {
-    axios.get("/messages/sync").then((response) => {
+    axios.get(`/messages/${roomId}`).then((response) => {
       setMessages(response.data);
     });
-  }, []);
+  }, [roomId]);
 
   useEffect(() => {
     const pusher = new Pusher("45269330fa99db0ee296", {
@@ -28,11 +29,10 @@ function ChatBody() {
       channel.unsubscribe();
     };
   }, [messages]);
-
   return (
     <div className="chatBody">
       {messages.map((message) => (
-        <ChatMessage message={message} />
+        <ChatMessage key={message._id} message={message} />
       ))}
     </div>
   );

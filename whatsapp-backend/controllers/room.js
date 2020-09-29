@@ -12,7 +12,6 @@ export async function get(req, res, _next) {
 
 export async function post(req, res, _next) {
   const dbMessage = req.body;
-
   Rooms.create(dbMessage, (err, data) => {
     if (err) {
       res.status(500).send(err);

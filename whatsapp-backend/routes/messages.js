@@ -7,4 +7,6 @@ router.get("/sync", message.get);
 
 router.post("/new", message.post);
 
+router.get("/:roomId", message.getChatByRoomId);
+
 export default router;

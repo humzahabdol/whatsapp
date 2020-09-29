@@ -49,6 +49,7 @@ function initializeMessagePusher(changeStream) {
         message: messageDetails.message,
         timestamp: messageDetails.timestamp,
         received: messageDetails.received,
+        roomId: messageDetails.roomId,
       });
     } else {
       console.log("Error triggering message Pusher");

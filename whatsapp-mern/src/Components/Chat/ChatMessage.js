@@ -1,12 +1,14 @@
 import React from "react";
 import "../../css/Chat/ChatMessage.css";
+import { useStateValue } from "../../Services/StateProvider.js";
 
 function ChatMessage({ message }) {
+  const [{ user }, dispatch] = useStateValue();
   return (
     <div>
       <p
         className={`chatMessage ${
-          message.received ? "chatMessage__receiver" : ""
+          message.name === user?.displayName ? "chatMessage__receiver" : ""
         }`}
       >
         <span className="chatMessage__name">{message.name}</span>

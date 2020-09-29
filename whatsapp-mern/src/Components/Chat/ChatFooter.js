@@ -3,9 +3,11 @@ import "../../css/Chat/ChatFooter.css";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
 import axios from "../../axios.js";
+import { useParams } from "react-router-dom";
 
 function ChatFooter() {
   const [input, setInput] = useState("");
+  const { roomId } = useParams();
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ function ChatFooter() {
         name: "Humzah Abdol",
         timestamp: dateString,
         received: true,
+        roomId: roomId,
       });
       setInput("");
     }
