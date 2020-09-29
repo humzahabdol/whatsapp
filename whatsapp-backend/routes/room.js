@@ -7,4 +7,6 @@ router.get("/sync", room.get);
 
 router.post("/new", room.post);
 
+router.get("/:id", room.getById);
+
 export default router;

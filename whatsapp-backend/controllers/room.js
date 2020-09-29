@@ -22,4 +22,14 @@ export async function post(req, res, _next) {
   });
 }
 
-export default { get, post };
+export async function getById(req, res, _next) {
+  Rooms.findById(req.params.id, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+}
+
+export default { get, post, getById };
