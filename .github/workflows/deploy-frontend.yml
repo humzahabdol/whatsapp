@@ -33,10 +33,10 @@ jobs:
           # deploy to Azure Web App.
           npm install
       - name: Upload artifact
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v2
         with:
-          name: webpack artifacts
-          path: public/
+          name: public
+          path: public
 
   Deploy-to-Azure:
     runs-on: ubuntu-latest
@@ -48,9 +48,9 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Download built artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v2
         with:
-          name: webpack artifacts
+          name: public
           path: public
       - name: dir2 directory
         run: ls -la
