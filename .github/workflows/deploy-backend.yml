@@ -1,17 +1,17 @@
 name: Production deployment
 
-on: 
+on:
   pull_request:
     types: [labeled]
-    
+
   push:
     branches:
       - master
 
 env:
   AZURE_WEBAPP_NAME: whatsapp-test-app
-  AZURE_WEBAPP_PACKAGE_PATH: './whatsapp-backend'      # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '14.10.1'                # set this to the node version to use
+  AZURE_WEBAPP_PACKAGE_PATH: "./whatsapp-backend" # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: "14.10.1" # set this to the node version to use
 jobs:
   build:
     if: contains(github.event.pull_request.labels.*.name, 'stage')
@@ -19,18 +19,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@master
+
       - name: Use Node.js ${{ env.NODE_VERSION }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
       - name: npm install, build, and test
-      run: |
-        # Build and test the project, then
-        # deploy to Azure Web App.
-        npm install
-        npm run build --if-present
-        npm run test --if-present
+        run: |
+          # Build and test the project, then
+          # deploy to Azure Web App.
+          npm install
+          npm run build --if-present
+          npm run test --if-present
 
   Deploy-to-Azure:
     runs-on: ubuntu-latest
