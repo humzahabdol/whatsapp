@@ -32,7 +32,6 @@ jobs:
           # Build and test the project, then
           # deploy to Azure Web App.
           npm install
-          npm run build
       - name: Upload artifact
         uses: actions/upload-artifact@master
         with:
