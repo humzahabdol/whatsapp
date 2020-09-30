@@ -32,26 +32,12 @@ jobs:
           # Build and test the project, then
           # deploy to Azure Web App.
           npm install
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: public
-          path: public
 
-  Deploy-to-Azure:
-    runs-on: ubuntu-latest
-    needs: build
-    name: Deploy app to Azure
-    steps:
       - name: "Login via Azure CLI"
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Download built artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: public
-          path: public
+
       - name: dir2 directory
         run: ls -la
 
