@@ -45,7 +45,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: dir2 directory
-        run: ls -R
+        run: ls
 
       - name: Deploy web app
         uses: azure/webapps-deploy@v2
