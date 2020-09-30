@@ -11,6 +11,8 @@ env:
   NODE_VERSION: '14.10.1'                # set this to the node version to use
 jobs:
   build:
+    if: contains(github.event.pull_request.labels.*.name, 'stage')
+
     runs-on: ubuntu-latest
 
     steps:
