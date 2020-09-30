@@ -1,6 +1,9 @@
 name: Production deployment
 
 on: 
+  pull_request:
+    types: [labeled]
+    
   push:
     branches:
       - master
