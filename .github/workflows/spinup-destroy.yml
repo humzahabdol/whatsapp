@@ -38,7 +38,7 @@ jobs:
       - name: Create webapp ui resource
         if: success()
         run: |
-          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME_UI }}  --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME_UI }}  --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}} --runtime "node|10.16"
       - name: Create webapp api resource
         if: success()
         run: |
