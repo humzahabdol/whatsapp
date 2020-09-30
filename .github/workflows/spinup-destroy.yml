@@ -1,0 +1,64 @@
+name: Configure Azure environment
+
+on:
+  pull_request:
+    types: [labeled]
+
+env:
+  PACKAGES_TOKEN: ${{secrets.PACKAGES_TOKEN}}
+  AZURE_RESOURCE_GROUP: whatsapp-humzahabdol
+  AZURE_APP_PLAN: whatsapp-test-plan
+  AZURE_LOCATION: '"WEST US 2"'
+  AZURE_WEBAPP_NAME_UI: whatsapp-test-app
+  AZURE_WEBAPP_NAME_BACKEND: whatsapp-test-api
+
+jobs:
+  setup-up-azure-resources:
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.pull_request.labels.*.name, 'spin up environment')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create Azure resource group
+        if: success()
+        run: |
+          az group create --location ${{env.AZURE_LOCATION}} --name ${{env.AZURE_RESOURCE_GROUP}} --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      - name: Create Azure app service plan
+        if: success()
+        run: |
+          az appservice plan create --resource-group ${{env.AZURE_RESOURCE_GROUP}} --name ${{env.AZURE_APP_PLAN}} --is-linux --sku F1 --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      - name: Create webapp ui resource
+        if: success()
+        run: |
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME_UI }}  --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      - name: Create webapp api resource
+        if: success()
+        run: |
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME_BACKEND }}  --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+
+  destroy-azure-resources:
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.pull_request.labels.*.name, 'destroy environment')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Destroy Azure environment
+        if: success()
+        run: |
+          az group delete --name ${{env.AZURE_RESOURCE_GROUP}} --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}} --yes
