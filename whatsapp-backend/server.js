@@ -4,6 +4,11 @@ import health from "./routes/health.js";
 import message from "./routes/messages.js";
 import room from "./routes/room.js";
 import dbconfig from "./services/dbconfig.js";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./swagger.json";
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api/v1", router);
 
 // app config
 const app = express();
