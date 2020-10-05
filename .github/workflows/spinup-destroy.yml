@@ -38,11 +38,11 @@ jobs:
       - name: Create webapp ui resource
         if: success()
         run: |
-          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME_UI }}  --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}} --runtime "node|10.15"
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME_UI }}  --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
       - name: Create webapp api resource
         if: success()
         run: |
-          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME_BACKEND }}  --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}} --runtime "node|10.5"
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME_BACKEND }}  --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
 
   destroy-azure-resources:
     runs-on: ubuntu-latest
